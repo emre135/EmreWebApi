@@ -11,8 +11,8 @@ namespace EmreWebApi.Models
 
         [Key]
         [Required]
-   
-        public int Boklån_Id { get; set; }
+
+        public int BoklånId { get; set; }
 
         [Required]
         public bool Utlånad { get; set; }
@@ -24,7 +24,29 @@ namespace EmreWebApi.Models
 
         //FK
         public int BokId { get; set; }
-        public int LåntagareId { get; set; }
+
+        public int LånekortId { get; set; }
+
+
+        public int SaldoId { get; set; }
+
+        public Låntagare Låntagare { get; set; }
+
+        public Saldo Saldo { get; set; }
+
+        public bool Inlämnad
+        {
+            get
+            {
+
+                return ReturDatum != null;
+            }
+
+        
+        }
+
     }
+
 }
 
+      

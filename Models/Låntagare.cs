@@ -12,8 +12,8 @@ namespace EmreWebApi.Models
 
         [Key]
         [Required]
-        
-        public int Lånekort { get; set; }
+
+        public int LånekortId { get; set; }
 
 
         [Required]
@@ -23,6 +23,10 @@ namespace EmreWebApi.Models
         [Required]
         [StringLength(50, MinimumLength = 1)]
         public string Efternamn { get; set; }
+        
+        public List<Boklån> Boklåns { get; set; }
+
+        
 
         
     }

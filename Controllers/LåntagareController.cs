@@ -25,14 +25,14 @@ namespace EmreWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Låntagare>>> GetLåntagare()
         {
-            return await _context.Låntagare.ToListAsync();
+            return await _context.Låntagares.ToListAsync();
         }
 
         // GET: api/Låntagare/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Låntagare>> GetLåntagare(int id)
         {
-            var låntagare = await _context.Låntagare.FindAsync(id);
+            var låntagare = await _context.Låntagares.FindAsync(id);
 
             if (låntagare == null)
             {
@@ -48,7 +48,7 @@ namespace EmreWebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutLåntagare(int id, Låntagare låntagare)
         {
-            if (id != låntagare.Lånekort)
+            if (id != låntagare.LånekortId)
             {
                 return BadRequest();
             }
@@ -80,23 +80,24 @@ namespace EmreWebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Låntagare>> PostLåntagare(Låntagare låntagare)
         {
-            _context.Låntagare.Add(låntagare);
+           
+            _context.Låntagares.Add(låntagare);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetLåntagare", new { id = låntagare.Lånekort }, låntagare);
+            return CreatedAtAction("GetLåntagare", new { id = låntagare.LånekortId }, låntagare);
         }
 
         // DELETE: api/Låntagare/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Låntagare>> DeleteLåntagare(int id)
         {
-            var låntagare = await _context.Låntagare.FindAsync(id);
+            var låntagare = await _context.Låntagares.FindAsync(id);
             if (låntagare == null)
             {
                 return NotFound();
             }
 
-            _context.Låntagare.Remove(låntagare);
+            _context.Låntagares.Remove(låntagare);
             await _context.SaveChangesAsync();
 
             return låntagare;
@@ -104,7 +105,91 @@ namespace EmreWebApi.Controllers
 
         private bool LåntagareExists(int id)
         {
-            return _context.Låntagare.Any(e => e.Lånekort == id);
+            return _context.Låntagares.Any(e => e.LånekortId == id);
         }
+
+        // HYR BOK
+
+        [HttpPost("{lånetagareId}/hyrbok/{bokId}")]
+        public async Task<ActionResult<Låntagare>> HyrBok(int lånekortId, int bokId)
+        {
+            var lånetagare = await _context.Låntagares
+                .SingleOrDefaultAsync(c => c.LånekortId == lånekortId);
+
+            if (lånetagare == null)
+            {
+                return BadRequest("Lånetagare existerar inte!");
+            }
+
+           
+            var saldo = await _context.Saldo
+                .Include(i => i.Bok)
+                .Include(i => i.Boklåns)
+                .Where(i => i.BokId == bokId)
+                .ToListAsync();
+
+           
+            var tillgängligSaldo = saldo.FirstOrDefault(i => i.Tillgänglig);
+
+            if (tillgängligSaldo == null)
+            {
+                return BadRequest("Boken är inte tillgänlig!");
+            }
+
+            var boklån = new Boklån()
+            {
+                LånekortId = lånekortId,
+                SaldoId = tillgängligSaldo.SaldoId,
+                LåneDatum = DateTime.Now
+            };
+
+            _context.Boklåns.Add(boklån);
+            await _context.SaveChangesAsync();
+
+            return Ok($"Lånetagare {lånetagare.Förnamn} har hyrt {tillgängligSaldo.Bok.BokTitel} klockan {boklån.LåneDatum}");
+        }
+
+
+        // RETUR BOK
+
+        [HttpPost("{låntagareId}/returBok/{bokId}")]
+        public async Task<ActionResult<Låntagare>> ReturnFilm(int låntagareId, int bokId)
+        {
+            
+            var låntagare = await _context.Låntagares
+                 .Include(i => i.Boklåns)
+                 .ThenInclude(i => i.Saldo)
+                 .ThenInclude(i => i.Bok)
+                 .SingleOrDefaultAsync(c => c.LånekortId == låntagareId);
+
+
+            if (låntagare == null)
+            {
+                return BadRequest("Låntagare existerar inte!");
+            }
+
+            if (låntagare.Boklåns == null || låntagare.Boklåns.Count == 0)
+            {
+                return BadRequest("Låntagaren har inte hyrt något!");
+            }
+
+        
+            var boklån = låntagare.Boklåns.FirstOrDefault(b => b.Saldo.BokId == bokId && !b.Inlämnad);
+
+            if (boklån == null)
+            {
+                return BadRequest("Låntagaren har inte hyrt den här boken.");
+            }
+
+            
+            _context.Entry(boklån).State = EntityState.Modified;
+            boklån.ReturDatum = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return Ok($"Låntagaren {låntagare.Förnamn} har lämnat tillbaka boken \"{boklån.Saldo.Bok.BokTitel}\" klockan {boklån.ReturDatum}");
+        }
+
+
     }
 }

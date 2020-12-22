@@ -12,48 +12,48 @@ namespace EmreWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BoklånController : ControllerBase
+    public class SaldoesController : ControllerBase
     {
         private readonly Context _context;
 
-        public BoklånController(Context context)
+        public SaldoesController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/Boklån
+        // GET: api/Saldoes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Boklån>>> GetBoklån()
+        public async Task<ActionResult<IEnumerable<Saldo>>> GetSaldo()
         {
-            return await _context.Boklåns.ToListAsync();
+            return await _context.Saldo.ToListAsync();
         }
 
-        // GET: api/Boklån/5
+        // GET: api/Saldoes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Boklån>> GetBoklån(int id)
+        public async Task<ActionResult<Saldo>> GetSaldo(int id)
         {
-            var boklån = await _context.Boklåns.FindAsync(id);
+            var saldo = await _context.Saldo.FindAsync(id);
 
-            if (boklån == null)
+            if (saldo == null)
             {
                 return NotFound();
             }
 
-            return boklån;
+            return saldo;
         }
 
-        // PUT: api/Boklån/5
+        // PUT: api/Saldoes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBoklån(int id, Boklån boklån)
+        public async Task<IActionResult> PutSaldo(int id, Saldo saldo)
         {
-            if (id != boklån.BoklånId)
+            if (id != saldo.SaldoId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(boklån).State = EntityState.Modified;
+            _context.Entry(saldo).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace EmreWebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BoklånExists(id))
+                if (!SaldoExists(id))
                 {
                     return NotFound();
                 }
@@ -74,39 +74,37 @@ namespace EmreWebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Boklån
+        // POST: api/Saldoes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Boklån>> PostBoklån(Boklån boklån)
+        public async Task<ActionResult<Saldo>> PostSaldo(Saldo saldo)
         {
-
-            
-            _context.Boklåns.Add(boklån);
+            _context.Saldo.Add(saldo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBoklån", new { id = boklån.BoklånId }, boklån);
+            return CreatedAtAction("GetSaldo", new { id = saldo.SaldoId }, saldo);
         }
 
-        // DELETE: api/Boklån/5
+        // DELETE: api/Saldoes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boklån>> DeleteBoklån(int id)
+        public async Task<ActionResult<Saldo>> DeleteSaldo(int id)
         {
-            var boklån = await _context.Boklåns.FindAsync(id);
-            if (boklån == null)
+            var saldo = await _context.Saldo.FindAsync(id);
+            if (saldo == null)
             {
                 return NotFound();
             }
 
-            _context.Boklåns.Remove(boklån);
+            _context.Saldo.Remove(saldo);
             await _context.SaveChangesAsync();
 
-            return boklån;
+            return saldo;
         }
 
-        private bool BoklånExists(int id)
+        private bool SaldoExists(int id)
         {
-            return _context.Boklåns.Any(e => e.BoklånId == id);
+            return _context.Saldo.Any(e => e.SaldoId == id);
         }
     }
 }

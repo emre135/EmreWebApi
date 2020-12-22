@@ -19,16 +19,28 @@ namespace EmreWebApi.Models
         [Required]
         public string BokTitel { get; set; }
 
-        
-        public string? Författare { get; set; }
+
 
         [Range(1, 5,
         ErrorMessage = "Betyget måste vara mellan 1-5")]
         public int Betyg { get; set; }
 
-       
-        
         public int? UtgivningsÅr { get; set; }
 
-    }
+
+        //FK, NAV
+
+        public int BoklånId { get; set; }
+
+        public int BokFörfattaresId { get; set; }
+
+        public List<Boklån> Boklåns { get; set; }
+
+        public List<BokFörfattare> BokFörfattares { get; set; }
+
+       
+
+        }
+
+   
 }

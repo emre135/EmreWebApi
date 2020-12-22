@@ -12,52 +12,48 @@ namespace EmreWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BoklånController : ControllerBase
+    public class FörfattareController : ControllerBase
     {
         private readonly Context _context;
 
-        public BoklånController(Context context)
+        public FörfattareController(Context context)
         {
             _context = context;
         }
 
-        // GET: api/Boklån
+        // GET: api/Författare
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Boklån>>> GetBoklån()
+        public async Task<ActionResult<IEnumerable<Författare>>> GetFörfattares()
         {
-            return await _context.Boklåns.ToListAsync();
-                //.Include(s => s.Saldo)
-                //.ThenInclude(b => b.Bok)
-                //.ThenInclude(bf => bf.BokFörfattares)
-                //.ThenInclude(l => l.L)
+            return await _context.Författares.ToListAsync();
         }
 
-        // GET: api/Boklån/5
+        // GET: api/Författare/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Boklån>> GetBoklån(int id)
+        public async Task<ActionResult<Författare>> GetFörfattare(int id)
         {
-            var boklån = await _context.Boklåns.FindAsync(id);
+            var författare = await _context.Författares.FindAsync(id);
 
-            if (boklån == null)
+            if (författare == null)
             {
                 return NotFound();
             }
 
-            return boklån;
+            return författare;
         }
 
-        // PUT: api/Boklån/5
+        // PUT: api/Författare/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBoklån(int id, Boklån boklån)
+        public async Task<IActionResult> PutFörfattare(int id, Författare författare)
         {
-            if (id != boklån.BoklånId)
+            if (id != författare.FörfattareId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(boklån).State = EntityState.Modified;
+            _context.Entry(författare).State = EntityState.Modified;
 
             try
             {
@@ -65,7 +61,7 @@ namespace EmreWebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BoklånExists(id))
+                if (!FörfattareExists(id))
                 {
                     return NotFound();
                 }
@@ -78,39 +74,37 @@ namespace EmreWebApi.Controllers
             return NoContent();
         }
 
-        // POST: api/Boklån
+        // POST: api/Författare
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Boklån>> PostBoklån(Boklån boklån)
+        public async Task<ActionResult<Författare>> PostFörfattare(Författare författare)
         {
-
-            
-            _context.Boklåns.Add(boklån);
+            _context.Författares.Add(författare);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBoklån", new { id = boklån.BoklånId }, boklån);
+            return CreatedAtAction("GetFörfattare", new { id = författare.FörfattareId }, författare);
         }
 
-        // DELETE: api/Boklån/5
+        // DELETE: api/Författare/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boklån>> DeleteBoklån(int id)
+        public async Task<ActionResult<Författare>> DeleteFörfattare(int id)
         {
-            var boklån = await _context.Boklåns.FindAsync(id);
-            if (boklån == null)
+            var författare = await _context.Författares.FindAsync(id);
+            if (författare == null)
             {
                 return NotFound();
             }
 
-            _context.Boklåns.Remove(boklån);
+            _context.Författares.Remove(författare);
             await _context.SaveChangesAsync();
 
-            return boklån;
+            return författare;
         }
 
-        private bool BoklånExists(int id)
+        private bool FörfattareExists(int id)
         {
-            return _context.Boklåns.Any(e => e.BoklånId == id);
+            return _context.Författares.Any(e => e.FörfattareId == id);
         }
     }
 }

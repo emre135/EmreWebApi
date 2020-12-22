@@ -110,7 +110,7 @@ namespace EmreWebApi.Controllers
 
         // HYR BOK
 
-        [HttpPost("{lånetagareId}/hyrbok/{bokId}")]
+        [HttpPost("{lånekortId}/hyrbok/{bokId}")]
         public async Task<ActionResult<Låntagare>> HyrBok(int lånekortId, int bokId)
         {
             var lånetagare = await _context.Låntagares
@@ -152,8 +152,8 @@ namespace EmreWebApi.Controllers
 
         // RETUR BOK
 
-        [HttpPost("{låntagareId}/returBok/{bokId}")]
-        public async Task<ActionResult<Låntagare>> ReturnFilm(int låntagareId, int bokId)
+        [HttpPost("{lånekortId}/returbok/{bokId}")]
+        public async Task<ActionResult<Låntagare>> ReturBok(int låntagareId, int bokId)
         {
             
             var låntagare = await _context.Låntagares

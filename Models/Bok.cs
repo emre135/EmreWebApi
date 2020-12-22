@@ -30,11 +30,7 @@ namespace EmreWebApi.Models
 
         //FK, NAV
 
-        public int BoklånId { get; set; }
-
-        public int BokFörfattaresId { get; set; }
-
-        public List<Boklån> Boklåns { get; set; }
+  
 
         public List<BokFörfattare> BokFörfattares { get; set; }
 

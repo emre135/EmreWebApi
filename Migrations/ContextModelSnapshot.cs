@@ -29,15 +29,9 @@ namespace EmreWebApi.Migrations
                     b.Property<int>("Betyg")
                         .HasColumnType("int");
 
-                    b.Property<int>("BokFörfattaresId")
-                        .HasColumnType("int");
-
                     b.Property<string>("BokTitel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BoklånId")
-                        .HasColumnType("int");
 
                     b.Property<int>("Isbn")
                         .HasColumnType("int");
@@ -72,9 +66,6 @@ namespace EmreWebApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BokId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("LåneDatum")
                         .HasColumnType("datetime2");
 
@@ -94,8 +85,6 @@ namespace EmreWebApi.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("BoklånId");
-
-                    b.HasIndex("BokId");
 
                     b.HasIndex("LåntagareLånekortId");
 
@@ -176,12 +165,6 @@ namespace EmreWebApi.Migrations
 
             modelBuilder.Entity("EmreWebApi.Models.Boklån", b =>
                 {
-                    b.HasOne("EmreWebApi.Models.Bok", null)
-                        .WithMany("Boklåns")
-                        .HasForeignKey("BokId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EmreWebApi.Models.Låntagare", "Låntagare")
                         .WithMany("Boklåns")
                         .HasForeignKey("LåntagareLånekortId");

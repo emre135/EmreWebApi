@@ -23,8 +23,7 @@ namespace EmreWebApi.Models
 
 
         //FK
-        public int BokId { get; set; }
-
+       
         public int LånekortId { get; set; }
 
 

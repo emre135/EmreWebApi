@@ -16,9 +16,7 @@ namespace EmreWebApi.Migrations
                     Isbn = table.Column<int>(nullable: false),
                     BokTitel = table.Column<string>(nullable: false),
                     Betyg = table.Column<int>(nullable: false),
-                    UtgivningsÅr = table.Column<int>(nullable: true),
-                    BoklånId = table.Column<int>(nullable: false),
-                    BokFörfattaresId = table.Column<int>(nullable: false)
+                    UtgivningsÅr = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -104,7 +102,6 @@ namespace EmreWebApi.Migrations
                     Utlånad = table.Column<bool>(nullable: false),
                     LåneDatum = table.Column<DateTime>(nullable: true),
                     ReturDatum = table.Column<DateTime>(nullable: true),
-                    BokId = table.Column<int>(nullable: false),
                     LånekortId = table.Column<int>(nullable: false),
                     SaldoId = table.Column<int>(nullable: false),
                     LåntagareLånekortId = table.Column<int>(nullable: true)
@@ -112,12 +109,6 @@ namespace EmreWebApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Boklåns", x => x.BoklånId);
-                    table.ForeignKey(
-                        name: "FK_Boklåns_Böcker_BokId",
-                        column: x => x.BokId,
-                        principalTable: "Böcker",
-                        principalColumn: "Bok_Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boklåns_Låntagares_LåntagareLånekortId",
                         column: x => x.LåntagareLånekortId,
@@ -136,11 +127,6 @@ namespace EmreWebApi.Migrations
                 name: "IX_BokFörfattare_FörfattareId",
                 table: "BokFörfattare",
                 column: "FörfattareId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Boklåns_BokId",
-                table: "Boklåns",
-                column: "BokId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Boklåns_LåntagareLånekortId",

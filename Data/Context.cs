@@ -27,12 +27,12 @@ namespace EmreWebApi.Data
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
 
-            var cascadeFKs = modelbuilder.Model.GetEntityTypes()
-                .SelectMany(t => t.GetForeignKeys())
-                .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
+          //  var cascadeFKs = modelbuilder.Model.GetEntityTypes()
+            //    .SelectMany(t => t.GetForeignKeys())
+              //  .Where(fk => !fk.IsOwnership && fk.DeleteBehavior == DeleteBehavior.Cascade);
 
-            foreach (var fk in cascadeFKs)
-                fk.DeleteBehavior = DeleteBehavior.Restrict;
+          //  foreach (var fk in cascadeFKs)
+            //    fk.DeleteBehavior = DeleteBehavior.Restrict;
 
             modelbuilder.Entity<BokFörfattare>()
                 .HasKey(sc => new { sc.BokId, sc.FörfattareId });

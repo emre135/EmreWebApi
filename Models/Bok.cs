@@ -11,7 +11,7 @@ namespace EmreWebApi.Models
     {
         [Key]
         [Required]
-        public int Bok_Id { get; set; }
+        public int BokId { get; set; }
 
         [Required]
         public int Isbn { get; set; }

@@ -153,14 +153,14 @@ namespace EmreWebApi.Controllers
         // RETUR BOK
 
         [HttpPost("{lånekortId}/returbok/{bokId}")]
-        public async Task<ActionResult<Låntagare>> ReturBok(int låntagareId, int bokId)
+        public async Task<ActionResult<Låntagare>> ReturBok(int lånekortId, int bokId)
         {
             
             var låntagare = await _context.Låntagares
                  .Include(i => i.Boklåns)
                  .ThenInclude(i => i.Saldo)
                  .ThenInclude(i => i.Bok)
-                 .SingleOrDefaultAsync(c => c.LånekortId == låntagareId);
+                 .SingleOrDefaultAsync(c => c.LånekortId == lånekortId);
 
 
             if (låntagare == null)

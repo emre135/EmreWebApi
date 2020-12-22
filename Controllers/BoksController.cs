@@ -48,7 +48,7 @@ namespace EmreWebApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBok(int id, Bok bok)
         {
-            if (id != bok.Bok_Id)
+            if (id != bok.BokId)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace EmreWebApi.Controllers
             _context.Böcker.Add(bok);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBok", new { id = bok.Bok_Id }, bok);
+            return CreatedAtAction("GetBok", new { id = bok.BokId }, bok);
         }
 
         // DELETE: api/Boks/5
@@ -104,7 +104,7 @@ namespace EmreWebApi.Controllers
 
         private bool BokExists(int id)
         {
-            return _context.Böcker.Any(e => e.Bok_Id == id);
+            return _context.Böcker.Any(e => e.BokId == id);
         }
     }
 }

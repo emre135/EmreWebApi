@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmreWebApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201222202817_init")]
+    [Migration("20201222215826_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,7 +23,7 @@ namespace EmreWebApi.Migrations
 
             modelBuilder.Entity("EmreWebApi.Models.Bok", b =>
                 {
-                    b.Property<int>("Bok_Id")
+                    b.Property<int>("BokId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -41,7 +41,7 @@ namespace EmreWebApi.Migrations
                     b.Property<int?>("UtgivningsÅr")
                         .HasColumnType("int");
 
-                    b.HasKey("Bok_Id");
+                    b.HasKey("BokId");
 
                     b.ToTable("Böcker");
                 });

@@ -11,7 +11,7 @@ namespace EmreWebApi.Migrations
                 name: "Böcker",
                 columns: table => new
                 {
-                    Bok_Id = table.Column<int>(nullable: false)
+                    BokId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Isbn = table.Column<int>(nullable: false),
                     BokTitel = table.Column<string>(nullable: false),
@@ -20,7 +20,7 @@ namespace EmreWebApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Böcker", x => x.Bok_Id);
+                    table.PrimaryKey("PK_Böcker", x => x.BokId);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,7 +65,7 @@ namespace EmreWebApi.Migrations
                         name: "FK_Saldo_Böcker_BokId",
                         column: x => x.BokId,
                         principalTable: "Böcker",
-                        principalColumn: "Bok_Id",
+                        principalColumn: "BokId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -89,7 +89,7 @@ namespace EmreWebApi.Migrations
                         name: "FK_BokFörfattare_Böcker_FörfattareId",
                         column: x => x.FörfattareId,
                         principalTable: "Böcker",
-                        principalColumn: "Bok_Id",
+                        principalColumn: "BokId",
                         onDelete: ReferentialAction.Cascade);
                 });
 

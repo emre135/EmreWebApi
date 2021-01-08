@@ -27,7 +27,7 @@ namespace EmreWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers()
+            services.AddControllersWithViews()
 
             .AddNewtonsoftJson(x => {
                  x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -47,9 +47,13 @@ namespace EmreWebApi
 
             app.UseAuthorization();
 
+            app.UseStaticFiles();
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

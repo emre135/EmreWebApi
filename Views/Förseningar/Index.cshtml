@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EmreWebApi.Models.Boklån>
+    <link rel="stylesheet" href="~/style.css" />
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Utlånad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LåneDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReturDatum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LånekortId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saldo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utlånad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LåneDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturDatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LånekortId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo.SaldoId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.BoklånId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.BoklånId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.BoklånId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

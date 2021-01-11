@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmreWebApi.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20201222215826_init")]
+    [Migration("20210111152957_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,10 @@ namespace EmreWebApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("LåneDatum")
+                    b.Property<int?>("BokId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LåneDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LånekortId")
@@ -77,16 +80,15 @@ namespace EmreWebApi.Migrations
                     b.Property<int?>("LåntagareLånekortId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReturDatum")
+                    b.Property<DateTime>("ReturDatum")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("SaldoId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Utlånad")
-                        .HasColumnType("bit");
-
                     b.HasKey("BoklånId");
+
+                    b.HasIndex("BokId");
 
                     b.HasIndex("LåntagareLånekortId");
 
@@ -128,6 +130,9 @@ namespace EmreWebApi.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("Telefonnummer")
+                        .HasColumnType("int");
+
                     b.HasKey("LånekortId");
 
                     b.ToTable("Låntagares");
@@ -167,6 +172,10 @@ namespace EmreWebApi.Migrations
 
             modelBuilder.Entity("EmreWebApi.Models.Boklån", b =>
                 {
+                    b.HasOne("EmreWebApi.Models.Bok", "Bok")
+                        .WithMany()
+                        .HasForeignKey("BokId");
+
                     b.HasOne("EmreWebApi.Models.Låntagare", "Låntagare")
                         .WithMany("Boklåns")
                         .HasForeignKey("LåntagareLånekortId");

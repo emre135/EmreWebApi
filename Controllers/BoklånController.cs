@@ -85,9 +85,13 @@ namespace EmreWebApi.Controllers
         public async Task<ActionResult<Boklån>> PostBoklån(Boklån boklån)
         {
 
+            boklån.LåneDatum = DateTime.Now;
+            boklån.ReturDatum = DateTime.Now.AddDays(1);
             
             _context.Boklåns.Add(boklån);
             await _context.SaveChangesAsync();
+
+           
 
             return CreatedAtAction("GetBoklån", new { id = boklån.BoklånId }, boklån);
         }

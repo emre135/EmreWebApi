@@ -56,5 +56,7 @@ namespace EmreWebApi.Data
         public DbSet<EmreWebApi.Models.BokFörfattare> BokFörfattare { get; set; }
 
         public DbSet<EmreWebApi.Models.Saldo> Saldo { get; set; }
+
+        
     }
 }

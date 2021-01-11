@@ -140,7 +140,8 @@ namespace EmreWebApi.Controllers
             {
                 LånekortId = lånekortId,
                 SaldoId = tillgängligSaldo.SaldoId,
-                LåneDatum = DateTime.Now
+                LåneDatum = DateTime.Now,
+                ReturDatum = DateTime.Now.AddDays(1)
             };
 
             _context.Boklåns.Add(boklån);

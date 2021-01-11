@@ -14,24 +14,27 @@ namespace EmreWebApi.Models
 
         public int BoklånId { get; set; }
 
-        [Required]
-        public bool Utlånad { get; set; }
+       
+        
 
-        public DateTime? LåneDatum { get; set; }
+        public DateTime LåneDatum { get; set; }
 
-        public DateTime? ReturDatum { get; set; }
+        public DateTime ReturDatum { get; set; }
 
 
         //FK
        
         public int LånekortId { get; set; }
 
+       
 
         public int SaldoId { get; set; }
 
         public Låntagare Låntagare { get; set; }
 
         public Saldo Saldo { get; set; }
+
+        public Bok Bok { get; set; }
 
         public bool Inlämnad
         {

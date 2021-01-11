@@ -1,59 +1,57 @@
 ﻿@model IEnumerable<EmreWebApi.Models.Boklån>
-    <link rel="stylesheet" href="~/style.css" />
+
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Förseningar";
 }
 
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<h1>Försenade inlämningar</h1>
+
+<table class="table" style="background-color:white;">
+    <thead class="thead-dark">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Utlånad)
+                BokTitel
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LåneDatum)
+                ISBN
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReturDatum)
+                Låntagare
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.LånekortId)
+                Telefon
             </th>
+
             <th>
-                @Html.DisplayNameFor(model => model.Saldo)
+                Inlämningsdatum
             </th>
-            <th></th>
         </tr>
     </thead>
+
+
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utlånad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LåneDatum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturDatum)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LånekortId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Saldo.SaldoId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BoklånId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BoklånId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BoklånId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+               <td>@item.Bok.BokTitel</td>
+                <td>@item.Bok.Isbn</td>
+                <td>@item.Låntagare.Förnamn</td>
+                <td>@item.Låntagare.Telefonnummer</td>
+                <td>@item.ReturDatum</td>
+
+
+            </tr>
+        }
     </tbody>
+
 </table>
+
+  

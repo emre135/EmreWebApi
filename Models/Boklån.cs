@@ -34,7 +34,7 @@ namespace EmreWebApi.Models
 
         public Saldo Saldo { get; set; }
 
-        public Bok Bok { get; set; }
+     
 
         public bool Inlämnad
         {

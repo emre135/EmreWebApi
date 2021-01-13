@@ -21,7 +21,16 @@ namespace EmreWebApi.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var bokbibliotekContext = _context.Boklåns.Where(b => b.ReturDatum < DateTime.Now).Include(b => b.Bok).Include(b => b.Låntagare);
+            var bokbibliotekContext = _context.Boklåns
+                .Where(b => b.ReturDatum < DateTime.Now)
+                .Include(b => b.Låntagare)
+                .Include(b => b.Saldo)
+                .ThenInclude(b => b.Bok);
+                
+                
+                
+                
+
             return View(await bokbibliotekContext.ToListAsync());
         }
     }

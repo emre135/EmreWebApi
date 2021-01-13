@@ -15,6 +15,7 @@ namespace EmreWebApi.Models
 
         public int LånekortId { get; set; }
 
+
         public int Telefonnummer { get; set; }
 
 
